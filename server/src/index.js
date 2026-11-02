@@ -1,4 +1,6 @@
 require('dotenv').config();
+const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -1024,11 +1026,24 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
   }
 });
 
+// ==========================================
+// 8. SERVIR FRONTEND REACT EN PRODUCCIÓN
+// ==========================================
+const clientDistPath = path.join(__dirname, '../../client/dist');
+if (fs.existsSync(path.join(clientDistPath, 'index.html'))) {
+  app.use(express.static(clientDistPath));
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(clientDistPath, 'index.html'));
+    }
+  });
+}
+
 // Inicializar servidor y base de datos
 async function startServer() {
   await initDatabase();
   app.listen(PORT, () => {
-    console.log(`🚀 Servidor Backend de ASBADECO corriendo en http://localhost:${PORT}`);
+    console.log(`🚀 Servidor de ASBADECO corriendo en http://localhost:${PORT}`);
   });
 }
 
