@@ -1,0 +1,22 @@
+{
+  "name": "asbadeco-ecommerce",
+  "version": "1.0.0",
+  "description": "Tienda online de ASBADECO - Artesanías en Yeso, Velas y Decoración",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"magenta,cyan\" \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "db:generate": "npm --prefix server run db:generate",
+    "db:migrate": "npm --prefix server run db:migrate",
+    "db:push": "npm --prefix server run db:push",
+    "db:seed": "npm --prefix server run db:seed",
+    "db:setup": "npm --prefix server run db:push && npm --prefix server run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+
